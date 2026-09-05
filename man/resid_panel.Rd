@@ -4,10 +4,24 @@
 \alias{resid_panel}
 \title{Panel of Diagnostic Residual Plots.}
 \usage{
-resid_panel(model, plots = "default", type = NA, bins = 30,
-  smoother = FALSE, qqline = TRUE, qqbands = FALSE, scale = 1,
-  theme = "bw", axis.text.size = 10, title.text.size = 12,
-  title.opt = TRUE, nrow = NULL)
+resid_panel(
+  model,
+  plots = "default",
+  type = NA,
+  bins = 30,
+  smoother = TRUE,
+  qqline = TRUE,
+  qqbands = FALSE,
+  scale = 1,
+  theme = "bw",
+  axis.text.size = 10,
+  title.text.size = 12,
+  title.opt = TRUE,
+  nrow = NULL,
+  alpha = 0.6,
+  coordfix = TRUE,
+  return_plot_list = FALSE
+)
 }
 \arguments{
 \item{model}{Model fit using either \code{lm}, \code{glm}, \code{lmer},
@@ -24,9 +38,8 @@ options available.)}
 \item{bins}{Number of bins to use when creating a histogram of the residuals.
 Default is set to 30.}
 
-\item{smoother}{Indicates whether or not to include a smoother on the index,
-residual-leverage, location-scale, and residual plots. Specify TRUE or FALSE.
-Default is set to FALSE.}
+\item{smoother}{Indicates whether or not to include a smoother on the residual 
+vs fitted and index plots. Specify TRUE or FALSE. Default is set to TRUE.}
 
 \item{qqline}{Indicates whether to include a 1-1 line on the qq-plot. Specify
 TRUE or FALSE. Default is set to TRUE.}
@@ -50,6 +63,14 @@ plots in the panel.}
 the panel. Specify TRUE or FALSE. Default is set to TRUE.}
 
 \item{nrow}{Sets the number of rows in the panel.}
+
+\item{alpha}{Sets the alpha level for displays with points. Default is set to 0.6.}
+
+\item{coordfix}{Uses fixed aspect ratio for QQ-plots and yvp. Default is TRUE.}
+
+\item{return_plot_list}{If specific plot types are supplied to the `plots` options, 
+this option indicates whether to return a list of individual plots. Specify TRUE 
+or FALSE. Default is set to FALSE.}
 }
 \value{
 A panel of residual diagnostic plots containing plots specified.

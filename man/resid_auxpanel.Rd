@@ -4,10 +4,24 @@
 \alias{resid_auxpanel}
 \title{Panel of Diagnostic Residual Plots.}
 \usage{
-resid_auxpanel(residuals, predicted, plots = "default", bins = 30,
-  smoother = FALSE, qqline = TRUE, qqbands = FALSE, scale = 1,
-  theme = "bw", axis.text.size = 10, title.text.size = 12,
-  title.opt = TRUE, nrow = NULL)
+resid_auxpanel(
+  residuals,
+  predicted,
+  plots = "default",
+  bins = 30,
+  smoother = FALSE,
+  qqline = TRUE,
+  qqbands = FALSE,
+  scale = 1,
+  theme = "bw",
+  axis.text.size = 10,
+  title.text.size = 12,
+  title.opt = TRUE,
+  nrow = NULL,
+  alpha = 0.6,
+  coordfix = TRUE,
+  return_plot_list = FALSE
+)
 }
 \arguments{
 \item{residuals}{The residuals from the model.}
@@ -45,6 +59,14 @@ plots.}
 Specify TRUE or FALSE. Default is set to TRUE.}
 
 \item{nrow}{Sets the number of rows in the panel.}
+
+\item{alpha}{Sets the alpha level for displays with points. Default is set to 0.6.}
+
+\item{coordfix}{Uses fixed aspect ratio for QQ-plots. Default is TRUE.}
+
+\item{return_plot_list}{If specific plot types are supplied to the `plots` options, 
+this option indicates whether to return a list of individual plots. Specify TRUE 
+or FALSE. Default is set to FALSE.}
 }
 \value{
 A panel of residual diagnostic plots containing plots specified.
@@ -93,5 +115,5 @@ penguin_tree_resid <- penguins$heartrate - penguin_tree_pred
 # Create a panel with the residual and index plot
 resid_auxpanel(residuals = penguin_tree_resid,
              predicted = penguin_tree_pred,
-             plots = c("resid", "index", "yvp"))
+             plots = c("resid", "index", "qq"))
 }

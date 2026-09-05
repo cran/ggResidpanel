@@ -4,10 +4,22 @@
 \alias{resid_interact}
 \title{Panel of Interactive Versions of Diagnostic Residual Plots.}
 \usage{
-resid_interact(model, plots = "default", type = NA, bins = 30,
-  smoother = FALSE, qqline = TRUE, scale = 0.9, theme = "bw",
-  axis.text.size = 10, title.text.size = 12, title.opt = TRUE,
-  nrow = NULL)
+resid_interact(
+  model,
+  plots = "default",
+  type = NA,
+  bins = 30,
+  smoother = TRUE,
+  qqline = TRUE,
+  scale = 0.9,
+  theme = "bw",
+  axis.text.size = 10,
+  title.text.size = 12,
+  title.opt = TRUE,
+  nrow = NULL,
+  alpha = 0.6,
+  coordfix = FALSE
+)
 }
 \arguments{
 \item{model}{Model fit using either \code{lm}, \code{glm}, \code{lmer},
@@ -25,9 +37,8 @@ for \code{resid_panel} for the options available.)}
 \item{bins}{Number of bins to use when creating a histogram of the residuals.
 Default is set to 30.}
 
-\item{smoother}{Indicates whether or not to include a smoother on the index,
-residual-leverage, location-scale, and residual plots. Specify TRUE or FALSE.
-Default is set to FALSE.}
+\item{smoother}{Indicates whether or not to include a smoother on the residual 
+vs fitted and index plots. Specify TRUE or FALSE. Default is set to TRUE.}
 
 \item{qqline}{Indicates whether to include a 1-1 line on the qq-plot. Specify
 TRUE or FALSE. Default is set to TRUE. (The option of \code{qqbands} has not
@@ -50,6 +61,10 @@ plots in the panel.}
 the panel. Specify TRUE or FALSE. Default is set to TRUE.}
 
 \item{nrow}{Sets the number of rows in the panel.}
+
+\item{alpha}{Sets the alpha level for displays with points. Default is set to 0.6.}
+
+\item{coordfix}{Uses fixed aspect ratio for QQ-plots and yvp. Default is FALSE.}
 }
 \value{
 A panel of interactive residual diagnostic plots containing plots specified.
@@ -70,14 +85,7 @@ penguin_model <- lme4::lmer(heartrate ~ depth + duration + (1|bird), data = peng
 # Create the default interactive panel
 resid_interact(penguin_model)
 
-# Select all plots to include in the panel and set the smoother option to TRUE
-resid_interact(penguin_model, plots = "all", smoother = TRUE)
-
-# Select only the residual plot and qq-plot to be included in the panel and
-# set the number of rows to 2
-resid_interact(penguin_model, plots = c("resid", "qq"), nrow = 2)
-
-# Choose the SAS panel of plots, change the theme to classic, and remove the
-# titles of the plots
-resid_interact(penguin_model, plots = "SAS", theme = "classic", title.opt = FALSE)
+# Select only the residual plot and qq-plot to be included in the panel,
+# set the number of rows to 2, change the theme to classic
+resid_interact(penguin_model, plots = c("resid", "qq"), nrow = 2, theme = "classic")
 }

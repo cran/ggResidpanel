@@ -2,27 +2,40 @@ Package: ggResidpanel
 Type: Package
 Title: Panels and Interactive Versions of Diagnostic Plots using
         'ggplot2'
-Version: 0.3.0
-Authors@R: c(person("Katherine", "Goode", email = "kgoode@iastate.edu", role = c("aut", "cre")),
-    person("Kathleen", "Rey", email = "kprey@iastate.edu", role = c("aut")))
-Description: An R package for creating panels of diagnostic plots for residuals from a model 
-    using ggplot2 and plotly to analyze residuals and model assumptions from a variety of 
-    viewpoints. It also allows for the creation of interactive diagnostic plots.
+Version: 0.4.0
+Authors@R: c(
+  person(
+    "Katherine", "Goode", 
+    email = "katherine.j.goode@gmail.com", 
+    role = c("aut", "cre")
+  ),
+  person(
+    "Kathleen", "Rey",
+    role = c("aut")),
+  person(
+    "Greenwood", "Mark", 
+    email = "greenwood@montana.edu", 
+    role = c("aut"))
+  )
+Description: An R package for creating diagnostic plots for models. The package allows for the 
+    creation of panels of plots and interactive plots.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://goodekat.github.io/ggResidpanel/
-Imports: cowplot, ggplot2, grDevices, grid, MASS, plotly, qqplotr,
-        stats, stringr
-RoxygenNote: 6.1.1
+Imports: cowplot, ggplot2, grDevices, grid, MASS, methods, plotly,
+        qqplotr, rlang, stats, stringr
 Suggests: dplyr, forcats, knitr, lme4, lmerTest, nlme, randomForest,
-        rmarkdown, rpart, testthat, vdiffr, wesanderson
+        rmarkdown, rpart, testthat (>= 3.0.0), vdiffr, wesanderson
 VignetteBuilder: knitr
-Depends: R (>= 3.0.0)
+Depends: R (>= 4.1.0)
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2019-05-31 22:03:46 UTC; kgoode
+Packaged: 2026-09-05 07:23:21 UTC; katherinegoode
 Author: Katherine Goode [aut, cre],
-  Kathleen Rey [aut]
-Maintainer: Katherine Goode <kgoode@iastate.edu>
+  Kathleen Rey [aut],
+  Greenwood Mark [aut]
+Maintainer: Katherine Goode <katherine.j.goode@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-05-31 23:20:04 UTC
+Date/Publication: 2026-09-05 15:40:20 UTC
