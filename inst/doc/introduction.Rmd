@@ -23,13 +23,14 @@ ggResidpanel was developed with the intention of providing an easier way to both
 
 ## Functions
 
-ggResidpanel has five functions:
+ggResidpanel functions:
 
 - `resid_panel`: Creates a panel of diagnostic plots of the residuals from a model
 - `resid_interact`: Creates an interactive panel of diagnostic plots of the residuals from a model
 - `resid_xpanel`: Creates a panel of diagnostic plots of the predictor variables 
 - `resid_compare`: Creates a panel of diagnostic plots from multiple models
 - `resid_auxpanel`: Creates a panel of diagnostic plots based on the predicted values and residuals from models not included in the package
+- `resid_calibrate`: Creates a panel of diagnostic residual plots from a fitted model and simulated responses from the same model. 
 
 Currently, ggResidpanel allows the first four functions listed above to work with models fit using the functions of `lm` and `glm` from base R, `lme` from nlme, and `lmer` or `glmer` from lme4 (or fit using lmerTest).
 
@@ -272,17 +273,73 @@ resid_auxpanel(
 The function `resid_calibrate` creates a panel of diagnostic residual plots from a fitted model and simulated responses from the same model. This is used to calibrate expectations for simulation variability when assumptions are true (see \code{simulate}), to compare to the actual observed residuals in any of a suite of diagnostic plots. This function requires the fitted model and the data set. However, for now, it only works with `lm` models.
 
 ```{r}
+# Fit an example model with one of the penguins
 penguin1_model <- 
   lm(
     heartrate ~ depth + duration,
     data = penguins |> dplyr::filter(bird == 1)
   )
 
+# Create panel of simulated and real plots
 resid_calibrate(
   model = penguin1_model, 
-  plots = "qq", 
+  plots = c("resid", "qq"), 
   nsim = 3, 
   shuffle = TRUE, 
   identify = TRUE
 )
+```
+
+## New Feature: Customization of Figures
+
+The manner in which the plot panels are created by `ggResidpanel` is such that it is not possible to directly modify the figures using `ggplot2` functions. However, the `return_plot_list = TRUE` option in `ggResidpanel` allows for the output of a list of figures. This option requires that specific plots are specified in the `plots` option, and it only works with the `resid_panel`, `resid_xpanel`, `resid_auxpanel`, and `resid_calibrate` functions. Here is an example...
+
+This code does lead to the desired results:
+
+```{r}
+resid_panel(penguin_model, plots = c("resid", "index")) +
+  ggplot2::theme_dark(header_family = "Times")
+```
+
+Instead, use the return_plot_list = TRUE option: 
+
+```{r}
+list_of_plots <-
+  resid_panel(
+    penguin_model, 
+    plots = c("resid", "index"), 
+    return_plot_list = TRUE
+  )
+```
+
+Details of created object: 
+
+```{r}
+#| collapse: true
+typeof(list_of_plots)
+names(list_of_plots)
+```
+
+Customize output plots:
+
+```{r}
+list_of_plots$resid + ggplot2::theme_dark(header_family = "Times")
+list_of_plots$index + ggplot2::theme_dark(header_family = "Times")
+```
+
+Streamlined code for customizing all plots in the list using the `purrr` package:
+
+```{r}
+list_of_custom_plots <-
+  purrr::map(
+    .x = list_of_plots, 
+    .f = function(x) x + ggplot2::theme_dark(header_family = "Times")
+  )
+list_of_custom_plots
+```
+
+This output list of customized plots can also be placed in a panel again:
+
+```{r}
+cowplot::plot_grid(plotlist = list_of_custom_plots)
 ```

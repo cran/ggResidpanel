@@ -2,7 +2,7 @@ Package: ggResidpanel
 Type: Package
 Title: Panels and Interactive Versions of Diagnostic Plots using
         'ggplot2'
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
   person(
     "Katherine", "Goode", 
@@ -13,7 +13,7 @@ Authors@R: c(
     "Kathleen", "Rey",
     role = c("aut")),
   person(
-    "Greenwood", "Mark", 
+    "Mark", "Greenwood", 
     email = "greenwood@montana.edu", 
     role = c("aut"))
   )
@@ -22,20 +22,23 @@ Description: An R package for creating diagnostic plots for models. The package 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://goodekat.github.io/ggResidpanel/
+URL: https://goodekat.github.io/ggResidpanel/,
+        https://github.com/goodekat/ggResidpanel
 Imports: cowplot, ggplot2, grDevices, grid, MASS, methods, plotly,
         qqplotr, rlang, stats, stringr
-Suggests: dplyr, forcats, knitr, lme4, lmerTest, nlme, randomForest,
-        rmarkdown, rpart, testthat (>= 3.0.0), vdiffr, wesanderson
+Suggests: dplyr, forcats, knitr, lme4, lmerTest, nlme, purrr,
+        randomForest, rmarkdown, rpart, testthat (>= 3.0.0), vdiffr,
+        wesanderson
 VignetteBuilder: knitr
 Depends: R (>= 4.1.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.1.0
+BugReports: https://github.com/goodekat/ggResidpanel/issues
 NeedsCompilation: no
-Packaged: 2026-09-05 07:23:21 UTC; katherinegoode
+Packaged: 2026-09-05 22:59:49 UTC; katherinegoode
 Author: Katherine Goode [aut, cre],
   Kathleen Rey [aut],
-  Greenwood Mark [aut]
+  Mark Greenwood [aut]
 Maintainer: Katherine Goode <katherine.j.goode@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-09-05 15:40:20 UTC
+Date/Publication: 2026-09-06 22:50:03 UTC

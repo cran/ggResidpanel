@@ -125,17 +125,50 @@ resid_auxpanel(
 )
 
 ## -----------------------------------------------------------------------------
+# Fit an example model with one of the penguins
 penguin1_model <- 
   lm(
     heartrate ~ depth + duration,
     data = penguins |> dplyr::filter(bird == 1)
   )
 
+# Create panel of simulated and real plots
 resid_calibrate(
   model = penguin1_model, 
-  plots = "qq", 
+  plots = c("resid", "qq"), 
   nsim = 3, 
   shuffle = TRUE, 
   identify = TRUE
 )
+
+## -----------------------------------------------------------------------------
+resid_panel(penguin_model, plots = c("resid", "index")) +
+  ggplot2::theme_dark(header_family = "Times")
+
+## -----------------------------------------------------------------------------
+list_of_plots <-
+  resid_panel(
+    penguin_model, 
+    plots = c("resid", "index"), 
+    return_plot_list = TRUE
+  )
+
+## -----------------------------------------------------------------------------
+typeof(list_of_plots)
+names(list_of_plots)
+
+## -----------------------------------------------------------------------------
+list_of_plots$resid + ggplot2::theme_dark(header_family = "Times")
+list_of_plots$index + ggplot2::theme_dark(header_family = "Times")
+
+## -----------------------------------------------------------------------------
+list_of_custom_plots <-
+  purrr::map(
+    .x = list_of_plots, 
+    .f = function(x) x + ggplot2::theme_dark(header_family = "Times")
+  )
+list_of_custom_plots
+
+## -----------------------------------------------------------------------------
+cowplot::plot_grid(plotlist = list_of_custom_plots)
 

@@ -1,14 +1,14 @@
 
-# ggResidpanel <img align="right" width="120" height="135" src="inst/figures/logo.png">
+# ggResidpanel <a href="https://goodekat.github.io/ggResidpanel/"><img src="man/figures/logo.png" align="right" height="139" alt="ggResidpanel website" /></a>
 
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/ggResidpanel)](https://CRAN.R-project.org/package=ggResidpanel)
+[![](https://www.r-pkg.org/badges/version/ggResidpanel?color=green)](https://cran.r-project.org/package=ggResidpanel)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/goodekat/ggResidpanel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/goodekat/ggResidpanel/actions/workflows/R-CMD-check.yaml)
-<!-- [![downloads](https://cranlogs.r-pkg.org/badges/ggResidpanel)](https://cran.rstudio.com/web/packages/ggResidpanel/index.html) -->
+[![monthly-downloads](http://cranlogs.r-pkg.org/badges/grand-total/ggResidpanel?color=blue)](https://cran.r-project.org/package=ggResidpanel)
+[![total-downloads](http://cranlogs.r-pkg.org/badges/last-month/ggResidpanel?color=blue)](https://cran.r-project.org/package=ggResidpanel)
 [![Codecov test
 coverage](https://codecov.io/gh/goodekat/ggResidpanel/graph/badge.svg)](https://app.codecov.io/gh/goodekat/ggResidpanel)
 <!-- badges: end -->
@@ -48,8 +48,8 @@ Here are some resources for learning how to use ggResidpanel:
 
 ## Overview and Examples
 
-The package provides five functions that allow the user to assess
-diagnostic plots from a model. These functions are:
+The package provides functions that allow the user to assess diagnostic
+plots from a model. These functions are:
 
 - `resid_panel`: Creates a panel of diagnostic plots of the residuals
   from a model
@@ -61,8 +61,8 @@ diagnostic plots from a model. These functions are:
   models
 - `resid_auxpanel`: Creates a panel of diagnostic plots for model types
   not included in the package
-- `resid_calibrate`: Creates a panel of diagnostic residual plots from a
-  fitted model and simulated responses from the same model.
+- **NEW** `resid_calibrate`: Creates a panel of diagnostic residual
+  plots from a fitted model and simulated responses from the same model.
 
 Currently, ggResidpanel allows the first four functions listed above to
 work with models fit using the functions of `lm`, `glm`, `lme` (from
@@ -94,29 +94,37 @@ available for this function.
 
 ``` r
 # Fit a model
-penguin_model <- lme4::lmer(heartrate ~ depth + duration + (1|bird), data = penguins)
+penguin_model <- 
+  lme4::lmer(
+    heartrate ~ depth + duration + (1|bird), 
+    data = penguins
+  )
 
 # Create the default panel of plots
 resid_panel(penguin_model)
 ```
 
-![](inst/figures/readme-unnamed-chunk-4-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
 # Create a pancel with residual, qq, and yvp plots, add 95% confidence interval 
 # bands to the qq-plot, and change the theme to classic
-resid_panel(penguin_model, plots = c("resid", "qq", "yvp"), 
-            qqbands = TRUE, theme = "classic")
+resid_panel(
+  penguin_model, 
+  plots = c("resid", "qq", "yvp"), 
+  qqbands = TRUE, 
+  theme = "classic"
+)
 ```
 
-![](inst/figures/readme-unnamed-chunk-4-2.png)<!-- -->
+![](man/figures/README-unnamed-chunk-4-2.png)<!-- -->
 
 ``` r
 # Create a panel with all plots available for a model fit using lmer
 resid_panel(penguin_model, plots = "all")
 ```
 
-![](inst/figures/readme-unnamed-chunk-4-3.png)<!-- -->
+![](man/figures/README-unnamed-chunk-4-3.png)<!-- -->
 
 #### `resid_interact`
 
@@ -142,14 +150,14 @@ variable versus the predictor (x) variables in the model.
 resid_xpanel(penguin_model, jitter.width = 0.1)
 ```
 
-![](inst/figures/readme-unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 # Create a panel of plots of the response variable versus the predictor variables
 resid_xpanel(penguin_model, yvar = "response", jitter.width = 0.1)
 ```
 
-![](inst/figures/readme-unnamed-chunk-6-2.png)<!-- -->
+![](man/figures/README-unnamed-chunk-6-2.png)<!-- -->
 
 #### `resid_compare`
 
@@ -167,10 +175,13 @@ penguin_model_log2 <-
   )
 
 # Plot the residual and normal quantile plots for the two models
-resid_compare(list(penguin_model, penguin_model_log2), plots = c("resid", "qq"))
+resid_compare(
+  list(penguin_model, penguin_model_log2),
+  plots = c("resid", "qq")
+)
 ```
 
-![](inst/figures/readme-unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-7-1.png)<!-- -->
 
 #### `resid_auxpanel`
 
@@ -181,21 +192,23 @@ create their own panel from the plots available for this function.
 
 ``` r
 # Fit a regression tree to the penguins data
-penguin_tree <- rpart::rpart(heartrate ~ depth + duration, data = penguins)
+penguin_tree = rpart::rpart(heartrate ~ depth + duration, data = penguins)
 
 # Obtain the predictions from the model on the observed data
-penguin_tree_pred <- predict(penguin_tree)
+penguin_tree_pred = predict(penguin_tree)
 
 # Obtain the residuals from the model
-penguin_tree_resid <- penguins$heartrate - penguin_tree_pred
+penguin_tree_resid = penguins$heartrate - penguin_tree_pred
 
 # Create a panel with the residual and index plot
-resid_auxpanel(residuals = penguin_tree_resid, 
-               predicted = penguin_tree_pred, 
-               plots = c("resid", "index"))
+resid_auxpanel(
+  residuals = penguin_tree_resid, 
+  predicted = penguin_tree_pred, 
+  plots = c("resid", "index")
+)
 ```
 
-![](inst/figures/readme-unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-8-1.png)<!-- -->
 
 #### `resid_calibrate`
 
@@ -223,6 +236,89 @@ resid_calibrate(
 )
 ```
 
-    ## [1] "Real residuals are in column 4"
+    ## [1] "Real residuals are in column 3"
 
-![](inst/figures/readme-unnamed-chunk-9-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-9-1.png)<!-- -->
+
+## New Feature: Customization of Figures
+
+The manner in which the plot panels are created by `ggResidpanel` is
+such that it is not possible to directly modify the figures using
+`ggplot2` functions. However, the `return_plot_list = TRUE` option in
+`ggResidpanel` allows for the output of a list of figures. This option
+requires that specific plots are specified in the `plots` option, and it
+only works with the `resid_panel`, `resid_xpanel`, `resid_auxpanel`, and
+`resid_calibrate` functions. Here is an example…
+
+This code does lead to the desired results:
+
+``` r
+resid_panel(penguin_model, plots = c("resid", "index")) +
+  ggplot2::theme_dark(header_family = "Times")
+```
+
+![](man/figures/README-unnamed-chunk-10-1.png)<!-- -->
+
+Instead, use the return_plot_list = TRUE option:
+
+``` r
+list_of_plots <-
+  resid_panel(
+    penguin_model, 
+    plots = c("resid", "index"), 
+    return_plot_list = TRUE
+  )
+```
+
+Details of created object:
+
+``` r
+typeof(list_of_plots)
+## [1] "list"
+names(list_of_plots)
+## [1] "resid" "index"
+```
+
+Customize output plots:
+
+``` r
+list_of_plots$resid + ggplot2::theme_dark(header_family = "Times")
+```
+
+![](man/figures/README-unnamed-chunk-13-1.png)<!-- -->
+
+``` r
+list_of_plots$index + ggplot2::theme_dark(header_family = "Times")
+```
+
+![](man/figures/README-unnamed-chunk-13-2.png)<!-- -->
+
+Streamlined code for customizing all plots in the list using the `purrr`
+package:
+
+``` r
+list_of_custom_plots <-
+  purrr::map(
+    .x = list_of_plots, 
+    .f = function(x) x + ggplot2::theme_dark(header_family = "Times")
+  )
+list_of_custom_plots
+```
+
+    ## $resid
+
+![](man/figures/README-unnamed-chunk-14-1.png)<!-- -->
+
+    ## 
+    ## $index
+
+![](man/figures/README-unnamed-chunk-14-2.png)<!-- -->
+
+This output list of customized plots can also be placed in a panel
+again:
+
+``` r
+cowplot::plot_grid(plotlist = list_of_custom_plots)
+```
+
+![](man/figures/README-unnamed-chunk-15-1.png)<!-- -->
